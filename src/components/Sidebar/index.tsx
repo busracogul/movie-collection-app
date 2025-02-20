@@ -11,13 +11,17 @@ const items: MenuItem[] = [
   {
     key: "1",
     icon: <HomeOutlined />,
-    label: "All Movies",
+    label: (
+      <a href="/" rel="noopener noreferrer">
+        All Movies
+      </a>
+    ),
   },
   {
     key: "2",
     icon: <HeartOutlined />,
     label: (
-      <a href="https://ant.design" rel="noopener noreferrer">
+      <a href="/favorites" rel="noopener noreferrer">
         Favorites
       </a>
     ),
@@ -25,7 +29,11 @@ const items: MenuItem[] = [
   {
     key: "3",
     icon: <PlusOutlined />,
-    label: "Add Movie",
+    label: (
+      <a href="/addMovie" rel="noopener noreferrer">
+        Add Movie
+      </a>
+    ),
   },
 ];
 
@@ -60,7 +68,6 @@ function index() {
         ></Menu>
       </Sider>
       <Layout>
-        
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
