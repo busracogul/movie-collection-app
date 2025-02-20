@@ -1,85 +1,31 @@
-import { HeartOutlined, HomeOutlined, PlusOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme, GetProp, MenuProps } from "antd";
-import MenuItem from "antd/es/menu/MenuItem";
+import { Layout } from "antd";
 import MovieCard from "../Card/MovieCardList";
+import SiderSection from "./SiderSection";
+import SiderContent from "./SiderContent";
+import { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+import Favorites from "../../pages/FavoritesPage/Favorites";
+import AddMovie from "../../pages/AddMoviePage/AddMovie";
 
-const { Content, Footer, Sider } = Layout;
-
-type MenuItem = GetProp<MenuProps, "items">[number];
-
-const items: MenuItem[] = [
-  {
-    key: "1",
-    icon: <HomeOutlined />,
-    label: (
-      <a href="/" rel="noopener noreferrer">
-        All Movies
-      </a>
-    ),
-  },
-  {
-    key: "2",
-    icon: <HeartOutlined />,
-    label: (
-      <a href="/favorites" rel="noopener noreferrer">
-        Favorites
-      </a>
-    ),
-  },
-  {
-    key: "3",
-    icon: <PlusOutlined />,
-    label: (
-      <a href="/addMovie" rel="noopener noreferrer">
-        Add Movie
-      </a>
-    ),
-  },
-];
-
-const siderStyle: React.CSSProperties = {
-  height: "100vh",
-};
+const { Footer } = Layout;
 
 function index() {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const location = useLocation();
+  const sidebarProps: { Component?: ReactNode } = {};
+
+  if (location.pathname === "/") {
+    sidebarProps.Component = <MovieCard />;
+  } else if (location.pathname === "/favorites") {
+    sidebarProps.Component = <Favorites />;
+  } else if (location.pathname === "/addMovie") {
+    sidebarProps.Component = <AddMovie />;
+  }
 
   return (
     <Layout>
-      <Sider
-        style={siderStyle}
-        breakpoint="lg"
-        collapsedWidth="0"
-        // onBreakpoint={(broken) => {
-        //   console.log(broken);
-        // }}
-        // onCollapse={(collapsed, type) => {
-        //   console.log(collapsed, type);
-        // }}
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          mode="inline"
-          // defaultSelectedKeys={["1"]}
-          items={items}
-          theme="dark"
-        ></Menu>
-      </Sider>
+      <SiderSection />
       <Layout>
-        <Content style={{ margin: "24px 16px 0" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <MovieCard />
-          </div>
-        </Content>
+        <SiderContent {...sidebarProps} />
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
