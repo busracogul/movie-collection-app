@@ -1,9 +1,9 @@
-import React from "react";
 import { HeartOutlined, HomeOutlined, PlusOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme, GetProp, MenuProps } from "antd";
 import MenuItem from "antd/es/menu/MenuItem";
+import MovieCard from "../Card/MovieCardList";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 type MenuItem = GetProp<MenuProps, "items">[number];
 
@@ -60,7 +60,7 @@ function index() {
         ></Menu>
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
@@ -70,7 +70,7 @@ function index() {
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            <MovieCard />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
