@@ -7,8 +7,6 @@ import { useLocation } from "react-router-dom";
 import Favorites from "../../pages/FavoritesPage/Favorites";
 import AddMovie from "../../pages/AddMoviePage/AddMovie";
 
-const { Footer } = Layout;
-
 function index() {
   const location = useLocation();
   const sidebarProps: { Component?: ReactNode } = {};
@@ -26,9 +24,6 @@ function index() {
       <SiderSection />
       <Layout>
         <SiderContent {...sidebarProps} />
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
