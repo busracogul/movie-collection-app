@@ -3,7 +3,8 @@ import MovieCard from "./MovieCard";
 import InputSearch from "../InputSearch";
 import "../../App.css";
 import { Col, Row } from "antd";
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
+
 interface Movie {
   Title: string;
   Year: string;
@@ -20,7 +21,8 @@ export default function MovieCardList() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const BASE_URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=aa5a8609`;
+  const API_KEY = import.meta.env.VITE_APIKEY;
+  const BASE_URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
 
   async function getMovie() {
     const response = await fetch(BASE_URL);
