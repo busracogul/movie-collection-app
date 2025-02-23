@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 import InputSearch from "../InputSearch";
 import "../../App.css";
 import { Col, Row } from "antd";
-
+import styles from "./styles.module.css"
 interface Movie {
   Title: string;
   Year: string;
@@ -40,13 +40,13 @@ export default function MovieCardList() {
   return (
     <>
       <InputSearch searchValue={searchValue} setSearchValue={setSearchValue} />
-      <Row style={{ justifyContent: "center" }}>
+      <Row className={styles.row}>
         {movies.map((movie) => (
           <Col
             key={movie.imdbID}
             sm={{ span: 12, offset: 1 }}
             md={{ span: 8, offset: 2 }}
-            lg={{ span: 6, offset: 1 }}
+            lg={{ span: 4, offset: 3 }}
             style={{ marginTop: "3rem" }}
           >
             <MovieCard

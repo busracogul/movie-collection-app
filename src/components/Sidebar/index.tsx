@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import Favorites from "../../pages/FavoritesPage/Favorites";
 import AddMovie from "../../pages/AddMoviePage/AddMovie";
 
-function index() {
+function Sidebar() {
   const location = useLocation();
   const sidebarProps: { Component?: ReactNode } = {};
 
@@ -29,4 +29,4 @@ function index() {
   );
 }
 
-export default index;
+export default Sidebar;
