@@ -4,40 +4,42 @@ import InputSearch from "../InputSearch";
 import "../../App.css";
 import { Col, Row } from "antd";
 import styles from "./styles.module.css";
+import { fetchListMovies } from "../../api/api";
 
 interface Movie {
-  Title: string;
-  Year: string;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-}
-
-interface MovieProps {
-  Search: Movie[];
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 export default function MovieCardList() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const API_KEY = import.meta.env.VITE_APIKEY;
-  const BASE_URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
-
-  async function getMovie() {
-    const response = await fetch(BASE_URL);
-    const movieData: MovieProps = await response.json();
-
-    if (movieData.Search) {
-      setMovies(movieData.Search);
-    }
-
-    return movieData;
-  }
-
   useEffect(() => {
-    getMovie();
-  }, [searchValue]);
+    async function getListMovies() {
+      try {
+        const fetchedListMovies = await fetchListMovies();
+        const fetchData = fetchedListMovies.results;
+        console.log("büşş", fetchData);
+        setMovies(fetchData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getListMovies();
+  }, []);
 
   return (
     <>
@@ -45,16 +47,16 @@ export default function MovieCardList() {
       <Row className={styles.row}>
         {movies.map((movie) => (
           <Col
-            key={movie.imdbID}
+            key={movie.id}
             sm={{ span: 12, offset: 1 }}
             md={{ span: 8, offset: 2 }}
             lg={{ span: 4, offset: 3 }}
             style={{ marginTop: "3rem" }}
           >
             <MovieCard
-              movieTitle={movie.Title}
-              imgSrc={movie.Poster}
-              imdbId={movie.imdbID}
+              movieTitle={movie.title}
+              imgSrc={movie.poster_path}
+              imdbId={movie.id}
             />
           </Col>
         ))}

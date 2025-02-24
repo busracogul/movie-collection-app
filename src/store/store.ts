@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface MovieProps {
-  imdbId: string;
+  imdbId: number;
   imgSrc: string;
   movieTitle: string;
 }
@@ -10,7 +10,7 @@ interface MovieProps {
 interface StoreProps {
   favorites: MovieProps[];
   addFavorite: (movie: MovieProps) => void;
-  removeFavorite: (imdbId: string) => void;
+  removeFavorite: (imdbId: number) => void;
 }
 
 export const useStore = create<StoreProps>()(
