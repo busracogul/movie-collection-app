@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import InputSearch from "../InputSearch";
 import "../../App.css";
 import { Col, Row } from "antd";
 import styles from "./styles.module.css";
 import { fetchListMovies } from "../../api/api";
+import { useEffect, useState, useCallback } from "react";
+import { debounce } from "lodash";
 
 interface Movie {
   adult: boolean;
@@ -26,14 +27,15 @@ interface Movie {
 export default function MovieCardList() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     async function getListMovies() {
       try {
         const fetchedListMovies = await fetchListMovies();
         const fetchData = fetchedListMovies.results;
-        console.log("büşş", fetchData);
         setMovies(fetchData);
+        setFilteredMovies(fetchData);
       } catch (err) {
         console.log(err);
       }
@@ -41,11 +43,30 @@ export default function MovieCardList() {
     getListMovies();
   }, []);
 
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setFilteredMovies(
+        movies.filter((movie) =>
+          movie.title.toLowerCase().includes(value.toLowerCase())
+        )
+      );
+    }, 2000),
+    [movies]
+  );
+
+  const handleSearchInput = (value: string) => {
+    setSearchValue(value);
+    debouncedSearch(value);
+  };
+
   return (
     <>
-      <InputSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+      <InputSearch
+        searchValue={searchValue}
+        setSearchValue={handleSearchInput}
+      />
       <Row className={styles.row}>
-        {movies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <Col
             key={movie.id}
             sm={{ span: 12, offset: 1 }}
