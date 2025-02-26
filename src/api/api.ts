@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: "https://api.themoviedb.org",
 });
 
-export async function fetchListMovies() {
-  const response = await instance.get(`/3/discover/movie?api_key=${API_KEY}`);
+export async function fetchListMovies(page: number) {
+  const response = await instance.get(`/3/discover/movie?api_key=${API_KEY}&page=${page}`);
   return response.data;
 }

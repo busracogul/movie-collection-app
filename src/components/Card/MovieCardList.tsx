@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import { fetchListMovies } from "../../api/api";
 import { useEffect, useState, useCallback } from "react";
 import { debounce } from "lodash";
+import PaginationSection from "../PaginationSection";
 
 interface Movie {
   adult: boolean;
@@ -28,20 +29,22 @@ export default function MovieCardList() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    async function getListMovies() {
+    async function getListMovies(page: number) {
       try {
-        const fetchedListMovies = await fetchListMovies();
-        const fetchData = fetchedListMovies.results;
-        setMovies(fetchData);
-        setFilteredMovies(fetchData);
+        const fetchedListMovies = await fetchListMovies(page);
+        setMovies(fetchedListMovies.results);
+        setFilteredMovies(fetchedListMovies.results);
+        setTotalPages(fetchedListMovies.total_pages);
       } catch (err) {
         console.log(err);
       }
     }
-    getListMovies();
-  }, []);
+    getListMovies(currentPage);
+  }, [currentPage]);
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -65,7 +68,7 @@ export default function MovieCardList() {
         searchValue={searchValue}
         setSearchValue={handleSearchInput}
       />
-      <Row className={styles.row}>
+      <Row className={styles.row} style={{ marginBottom: "3rem" }}>
         {filteredMovies.map((movie) => (
           <Col
             key={movie.id}
@@ -82,6 +85,11 @@ export default function MovieCardList() {
           </Col>
         ))}
       </Row>
+      <PaginationSection
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }
