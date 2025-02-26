@@ -1,7 +1,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -27,12 +26,13 @@ function PaginationSection({
 
   return (
     <>
-      <Pagination>
+      <Pagination style={{ paddingBlock: "1.2rem" }}>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
               href="#"
               onClick={() => handlePageChange(currentPage - 1)}
+              className="!text-gray-400"
             />
           </PaginationItem>
 
@@ -43,8 +43,10 @@ function PaginationSection({
                 <PaginationLink
                   href="#"
                   onClick={() => handlePageChange(page)}
+                  className={`!text-gray-400 ${
+                    currentPage === page ? "font-bold text-gray-500" : ""
+                  }`}
                   style={{
-                    fontWeight: currentPage === page ? "bold" : "normal",
                     fontSize: currentPage === page ? "1.2rem" : "inherit",
                   }}
                 >
@@ -54,26 +56,11 @@ function PaginationSection({
             );
           })}
 
-          {totalPages > 5 && (
-            <>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href="#"
-                  onClick={() => handlePageChange(totalPages)}
-                >
-                  {totalPages}
-                </PaginationLink>
-              </PaginationItem>
-            </>
-          )}
-
           <PaginationItem>
             <PaginationNext
               href="#"
               onClick={() => handlePageChange(currentPage + 1)}
+              className="!text-gray-400"
             />
           </PaginationItem>
         </PaginationContent>

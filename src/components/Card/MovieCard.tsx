@@ -64,7 +64,7 @@ export default function MovieCard({
         </div>
       }
     >
-      <h3>{movieTitle}</h3>
+      <h3 className="text-lg font-medium">{movieTitle}</h3>
       <p
         style={{
           position: "absolute",

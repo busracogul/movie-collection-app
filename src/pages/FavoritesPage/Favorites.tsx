@@ -7,8 +7,8 @@ export default function Favorites() {
 
   return (
     <>
-      <h2>Favorite Movies</h2>
-      <Row style={{ justifyContent: "center" }}>
+      <h2 className="text-2xl text-gray-400 font-bold">Favorite Movies</h2>
+      <Row style={{ justifyContent: "center", backgroundColor:"rgb(4,21,39)", height:"100dvh" }}>
         {favorites.length > 0 ? (
           favorites.map((movie) => (
             <Col
@@ -26,7 +26,7 @@ export default function Favorites() {
             </Col>
           ))
         ) : (
-          <p>No favorites added yet.</p>
+          <p className="text-gray-400">No favorites added yet.</p>
         )}
       </Row>
     </>
