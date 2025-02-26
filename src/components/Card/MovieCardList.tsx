@@ -7,6 +7,7 @@ import { fetchListMovies } from "../../api/api";
 import { useEffect, useState, useCallback } from "react";
 import { debounce } from "lodash";
 import PaginationSection from "../PaginationSection";
+import DialogSection from "../DialogSection";
 
 interface Movie {
   adult: boolean;
@@ -31,6 +32,7 @@ export default function MovieCardList() {
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     async function getListMovies(page: number) {
@@ -64,32 +66,46 @@ export default function MovieCardList() {
 
   return (
     <>
-      <InputSearch
-        searchValue={searchValue}
-        setSearchValue={handleSearchInput}
-      />
-      <Row className={styles.row} style={{ marginBottom: "3rem" }}>
-        {filteredMovies.map((movie) => (
-          <Col
-            key={movie.id}
-            sm={{ span: 12, offset: 1 }}
-            md={{ span: 8, offset: 2 }}
-            lg={{ span: 4, offset: 3 }}
-            style={{ marginTop: "3rem" }}
-          >
-            <MovieCard
-              movieTitle={movie.title}
-              imgSrc={movie.poster_path}
-              imdbId={movie.id}
-            />
-          </Col>
-        ))}
-      </Row>
-      <PaginationSection
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
+      <div style={{ width: "100%", height: "100vh" }}>
+        <InputSearch
+          searchValue={searchValue}
+          setSearchValue={handleSearchInput}
+        />
+        <Row className={styles.row} style={{ marginBottom: "3rem" }}>
+          {filteredMovies.map((movie) => (
+            <Col
+              key={movie.id}
+              sm={{ span: 12, offset: 1 }}
+              md={{ span: 8, offset: 2 }}
+              lg={{ span: 6, offset: 1 }}
+              style={{ marginTop: "3rem" }}
+              onClick={() => setSelectedMovie(movie)}
+            >
+              <MovieCard
+                movieTitle={movie.title}
+                imgSrc={movie.poster_path}
+                imdbId={movie.id}
+                onClick={() => {
+                  console.log("geldin mii", movie.title);
+                  setSelectedMovie(movie);
+                }}
+              />
+            </Col>
+          ))}
+        </Row>
+
+        <PaginationSection
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
+        {selectedMovie && (
+          <DialogSection
+            movie={selectedMovie}
+            onClose={() => setSelectedMovie(null)}
+          />
+        )}
+      </div>
     </>
   );
 }
