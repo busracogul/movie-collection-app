@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import FavoritesPage from "./pages/FavoritesPage";
-import AddMoviePage from "./pages/AddMoviePage";
 import Layout from "./layout/Layout";
 
 const router = createBrowserRouter([
@@ -14,10 +13,6 @@ const router = createBrowserRouter([
       {
         path: "/favorites",
         element: <FavoritesPage />,
-      },
-      {
-        path: "/addMovie",
-        element: <AddMoviePage />,
       },
     ],
   },

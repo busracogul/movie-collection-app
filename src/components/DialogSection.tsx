@@ -71,12 +71,10 @@ export default function DialogSection({ movie, onClose }: DialogSectionProps) {
               {movie.popularity.toFixed(0)}
             </span>
           </p>
-          <p className="text-gray-400 text-sm">
-            Overview: {""}
-            <DialogDescription className="text-gray-300 text-sm">
-              {movie.overview}
-            </DialogDescription>
-          </p>
+
+          <DialogDescription className="text-gray-400 text-sm">
+            Overview:  <span className="text-white">{movie.overview}</span>
+          </DialogDescription>
         </div>
       </DialogContent>
     </Dialog>

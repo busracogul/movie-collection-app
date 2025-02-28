@@ -1,4 +1,4 @@
-import { HeartOutlined, HomeOutlined, PlusOutlined } from "@ant-design/icons";
+import { HeartOutlined, HomeOutlined } from "@ant-design/icons";
 import { GetProp, Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 
@@ -23,16 +23,6 @@ const items: MenuItem[] = [
       </a>
     ),
   },
-  {
-    key: "3",
-    className: "sidebar-list-element",
-    icon: <PlusOutlined style={{ fontSize: "1rem" }} />,
-    label: (
-      <a href="/addMovie" rel="noopener noreferrer">
-        Add Movie
-      </a>
-    ),
-  },
 ];
 type MenuItem = GetProp<MenuProps, "items">[number];
 
@@ -40,14 +30,12 @@ const siderStyle: React.CSSProperties = {
   minHeight: "100dvh",
   display: "flex",
   justifyContent: "center",
-  boxSizing:"border-box",
-  
+  boxSizing: "border-box",
 };
 export default function SiderSection() {
   return (
     <>
       <Sider style={siderStyle} breakpoint="lg" collapsedWidth="0">
-       
         <Menu
           mode="inline"
           items={items}

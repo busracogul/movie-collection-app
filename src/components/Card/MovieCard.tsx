@@ -6,7 +6,7 @@ interface MovieCardProps {
   imgSrc: string;
   movieTitle: string;
   imdbId: number;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function MovieCard({
@@ -33,8 +33,9 @@ export default function MovieCard({
     <Card
       hoverable
       onClick={() => {
-        console.log("lütfen gellll", imdbId);
-        onClick();
+        if (onClick) {
+          onClick();
+        }
       }}
       style={{ position: "relative", cursor: "pointer" }}
       cover={

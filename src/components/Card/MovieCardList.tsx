@@ -86,7 +86,6 @@ export default function MovieCardList() {
                 imgSrc={movie.poster_path}
                 imdbId={movie.id}
                 onClick={() => {
-                  console.log("geldin mii", movie.title);
                   setSelectedMovie(movie);
                 }}
               />
