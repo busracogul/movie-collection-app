@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# 🎬 Movie Collection App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React, TypeScript ve Vite kullanarak geliştirilen bir Movie Collection App. Bu uygulama, kullanıcıların TMDB API’sinden filmleri keşfetmelerine, film detaylarını görmelerine ve filmleri favorilere eklemelerine olanak tanır. Favori filmler özel bir sayfada görüntülenebilir.
 
-Currently, two official plugins are available:
+## 🚀 Özellikler
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Film Listeleme**: TMDB API’sinden alınan filmleri listeleme.
+- **Film Detayları**: Her filmin detaylarını görüntüleme; başlık, açıklama, oy ortalaması, oy sayısı gibi bilgileri görme.
+- **Favoriler**: Filmleri favorilere ekleyip, bunları favoriler sayfasında görüntüleme.
+- **Responsive Tasarım**: Tailwind CSS kullanarak duyarlı ve temiz bir UI tasarımı.
+- **Dialog Pencereleri**: Film detayları, Radix UI kullanarak dialog penceresinde gösterilir.
 
-## Expanding the ESLint configuration
+## 🛠️ Kullanılan Teknolojiler
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React (v19.0.0)**: Bileşen yapısını kullanarak MovieCard, MovieDetails ve FavoritesPage gibi modülleri oluşturmak için kullanıldı.
+- **TypeScript**: Tip güvenliği sağlayarak hata oranını azaltmak için tüm bileşenlerde kullanıldı.
+- **Vite**: Hızlı geliştirme ortamı sağlamak için proje yapılandırmasında kullanıldı.
+- **Tailwind CSS**: Kullanıcı arayüzünü hızlı ve esnek bir şekilde tasarlamak için MovieCard, butonlar ve favoriler sayfasında kullanıldı.
+- **Radix UI (Dialog)**: Film detaylarını gösteren açılır pencere (modal) bileşeni için kullanıldı.
+- **Ant Design**: UI bileşenlerini (butonlar, ikonlar) daha modern ve şık hale getirmek için kullanıldı.
+- **Axios**: TMDB API’sine HTTP istekleri yaparak film verilerini almak için kullanıldı.
+- **Zustand**: Favorilere eklenen filmleri saklamak için kullanıldı.
+- **Lodash**: Arama işlemlerinde gereksiz API isteklerini önlemek için `debounce` fonksiyonu ile kullanıldı.
+- **TMDB API**: Film verilerini çekmek için kullanıldı.
 
-- Configure the top-level `parserOptions` property like this:
+## 📸 Ekran Görüntüleri
+- **Ana Ekran**
+  ![ana ekran](https://github.com/user-attachments/assets/3bceaffc-436b-4567-8840-65995b7f8339)
+- **Detay Sayfası**
+ ![detay sayfası](https://github.com/user-attachments/assets/ec02fbda-46a7-4e86-8897-b125b6882201)
+- **Favori Sayfası**
+ ![favori sayfası](https://github.com/user-attachments/assets/8114f599-63f7-4559-8eca-4fb8a2b9d64a)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## ⚙️ Kurulum
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Bu projeyi klonlayın:
+   ```bash
+   git clone <https://github.com/busracogul/movie-collection-app.git>
+   cd movie-collection-app
+   ```
+2. Bağımlılıkları yükleyin:
+   ```bash
+   npm install
+   ```
+3. Geliştirme sunucusunu başlatın:
+   ```bash
+   npm run dev
+   ```
+4. Uygulamayı tarayıcınızda görüntüleyin:
+   ```bash
+   http://localhost:5173
+   ```
