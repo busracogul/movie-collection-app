@@ -3,7 +3,7 @@ import InputSearch from "../InputSearch";
 import "../../App.css";
 import { Col, Row } from "antd";
 import styles from "./styles.module.css";
-import { fetchListMovies } from "../../api/api";
+import { fetchListMovies, fetchSearchMovies } from "../../api/api";
 import { useEffect, useState, useCallback } from "react";
 import { debounce } from "lodash";
 import PaginationSection from "../PaginationSection";
@@ -33,10 +33,13 @@ export default function MovieCardList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     async function getListMovies(page: number) {
       try {
+        if (isSearching) return;
+
         const fetchedListMovies = await fetchListMovies(page);
         setMovies(fetchedListMovies.results);
         setFilteredMovies(fetchedListMovies.results);
@@ -46,22 +49,32 @@ export default function MovieCardList() {
       }
     }
     getListMovies(currentPage);
-  }, [currentPage]);
+  }, [currentPage, isSearching]);
 
   const debouncedSearch = useCallback(
-    debounce((value: string) => {
-      setFilteredMovies(
-        movies.filter((movie) =>
-          movie.title.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    }, 2000),
+    debounce(async (value: string, page: number) => {
+      if (value.trim() === "") {
+        setIsSearching(false);
+        setFilteredMovies(movies);
+        return;
+      }
+
+      setIsSearching(true);
+      try {
+        const searchResults = await fetchSearchMovies(value, page);
+        setFilteredMovies(searchResults.results);
+        setTotalPages(searchResults.total_pages);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 1000),
     [movies]
   );
 
   const handleSearchInput = (value: string) => {
     setSearchValue(value);
-    debouncedSearch(value);
+    setCurrentPage(1);
+    debouncedSearch(value, 1);
   };
 
   return (
@@ -96,7 +109,12 @@ export default function MovieCardList() {
         <PaginationSection
           currentPage={currentPage}
           totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={(page) => {
+            setCurrentPage(page);
+            if (isSearching) {
+              debouncedSearch(searchValue, page);
+            }
+          }}
         />
         {selectedMovie && (
           <DialogSection
