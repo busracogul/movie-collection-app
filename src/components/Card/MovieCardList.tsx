@@ -88,7 +88,7 @@ export default function MovieCardList() {
           {filteredMovies.map((movie) => (
             <Col
               key={movie.id}
-              sm={{ span: 12, offset: 1 }}
+              xs={{ span: 12, offset: 3 }}
               md={{ span: 8, offset: 2 }}
               lg={{ span: 6, offset: 1 }}
               style={{ marginTop: "3rem" }}

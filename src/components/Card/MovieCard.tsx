@@ -1,6 +1,7 @@
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Button, Card } from "antd";
 import { useStore } from "../../store/store";
+import { toast } from "sonner";
 
 interface MovieCardProps {
   imgSrc: string;
@@ -24,11 +25,15 @@ export default function MovieCard({
 
     if (isFavorite) {
       removeFavorite(imdbId);
+      toast.error(`${movieTitle} favorilerden kaldırıldı`);
     } else {
       addFavorite({ imgSrc, movieTitle, imdbId });
+      toast.success(`${movieTitle} favorilere eklendi`);
     }
   }
 
+  const placeholderImg = "/public/placeholder-img.jpg";
+  const isPlaceholder = !imgSrc;
   return (
     <Card
       hoverable
@@ -48,24 +53,32 @@ export default function MovieCard({
               filter: "blur(3px)",
               width: "100%",
             }}
-            src={`https://image.tmdb.org/t/p/original/${imgSrc}`}
+            src={
+              isPlaceholder
+                ? placeholderImg
+                : `https://image.tmdb.org/t/p/original/${imgSrc}`
+            }
           />
-          <img
-            alt={movieTitle}
-            style={{
-              height: "280px",
-              objectFit: "contain",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-            src={`https://image.tmdb.org/t/p/original/${imgSrc}`}
-          />
+          {!isPlaceholder && (
+            <img
+              alt={movieTitle}
+              style={{
+                height: "280px",
+                objectFit: "contain",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              src={`https://image.tmdb.org/t/p/original/${imgSrc}`}
+            />
+          )}
         </div>
       }
     >
-      <h3 className="text-lg font-medium">{movieTitle}</h3>
+      <h3 className="text-lg font-medium max-h-8 overflow-hidden">
+        {movieTitle}
+      </h3>
       <p
         style={{
           position: "absolute",
